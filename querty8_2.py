@@ -1,26 +1,25 @@
+# Prints all pair of words that are typed with every finger exactly once on a QWERTY keyboard
+
 from collections import defaultdict
 
-from common import get_all_words, get_mask
+from common import get_all_words, get_finger_mask
 
-# length -> mask -> list of words
-words = defaultdict(lambda: defaultdict(list))
+words = defaultdict(list)  # mask -> list of words with that mask and no repeats
 for word in get_all_words():
-    mask = get_mask(word)
-    length = len(word)
-    if mask.bit_count() == length:
-        words[length][mask].append(word)
+    mask = get_finger_mask(word)
+    if mask.bit_count() == len(word):
+        words[mask].append(word)
 
 
 def get_words(mask: int) -> list[str]:
-    return words[mask.bit_count()][mask]
+    # return words with finger mask
+    return words[mask]
 
 
-reverse_order = False # put word with P first instead of second?
+reverse_order = False  # put word with P first instead of second?
 count = 0
 unique_words = 0
-mask1_range = range(128, 256) if reverse_order else range(0, 128)
-mask2_range = range(0, 128) if reverse_order else range(128, 256)
-for mask1 in mask1_range:  # word with letter 7 (p) second
+for mask1 in range(128, 256) if reverse_order else range(0, 128):  # word with letter 7 (p) second
     words1 = get_words(mask1)
     if words1:
         mask2 = ~mask1 & 0xFF
@@ -33,7 +32,7 @@ for mask1 in mask1_range:  # word with letter 7 (p) second
                 print('-' * 40)
                 for word2 in words2:
                     print(f'   {word1} {word2}')
-for mask2 in mask2_range:
+for mask2 in range(0, 128) if reverse_order else range(128, 256):
     unique_words += len(get_words(mask2))
 print('-' * 40)
 print(f'{count:,} word pairs with {unique_words:,} unique words')
