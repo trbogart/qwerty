@@ -8,4 +8,4 @@ def is_match(s: str) -> bool:
 
 
 results = [word for word in get_all_words() if is_match(word)]
-print(f'{len(results)}\n{'\n'.join(results)}')
+print(f'{len(results)} words:\n{'\n'.join(results)}')
