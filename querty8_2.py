@@ -15,7 +15,7 @@ def get_words(mask: int) -> list[str]:
     return words[mask.bit_count()][mask]
 
 
-reverse_order = True # put word with P first instead of second?
+reverse_order = False # put word with P first instead of second?
 count = 0
 unique_words = 0
 mask1_range = range(128, 256) if reverse_order else range(0, 128)
