@@ -1,4 +1,5 @@
-# Prints all pair of words that are typed with every finger exactly once on a QWERTY keyboard
+# Counts groups of words that can be typed with every finger exactly once on a QWERTY keyboard
+# Ignores spaces, but groups of 3 words use all ten fingers exactly once
 from typing import Iterator, Tuple
 
 from common import get_all_words, get_finger_mask
