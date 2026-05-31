@@ -43,8 +43,8 @@ class Qwerty:
 
     @staticmethod
     def _get_sub_masks(mask: int) -> Iterator[Tuple[int, int]]:
-        if mask.bit_length() > 2:
-            for mask1 in range(1, 128):
+        if mask.bit_count() > 2:
+            for mask1 in range(1, 1 << (mask.bit_length()-1)):
                 if mask1 != mask and mask1 | mask == mask:
                     mask2 = ~mask1 & mask
                     assert mask1 > 0
