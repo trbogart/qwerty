@@ -16,10 +16,10 @@ def get_words(mask: int) -> list[str]:
     return words[mask]
 
 
-reverse_order = False  # put word with P first instead of second?
+# both counts are doubled
 count = 0
 unique_words = 0
-for mask1 in range(128, 256) if reverse_order else range(0, 128):  # word with letter 7 (p) second
+for mask1 in range(1, 256):
     words1 = get_words(mask1)
     if words1:
         mask2 = ~mask1 & 0xFF
@@ -32,7 +32,5 @@ for mask1 in range(128, 256) if reverse_order else range(0, 128):  # word with l
                 print('-' * 40)
                 for word2 in words2:
                     print(f'   {word1} {word2}')
-for mask2 in range(0, 128) if reverse_order else range(128, 256):
-    unique_words += len(get_words(mask2))
 print('-' * 40)
-print(f'{count:,} word pairs with {unique_words:,} unique words')
+print(f'{count // 2:,} word pairs with {unique_words // 2:,} unique words')
