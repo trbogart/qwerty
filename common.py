@@ -1,4 +1,5 @@
 from functools import reduce
+from typing import Iterable
 
 layout = 'qwerty'
 
@@ -13,7 +14,7 @@ finger_masks = {
 }
 
 
-def get_all_words():
+def get_all_words() -> Iterable[str]:
     # return all words from SOWPODS dictionary
     with open('sowpods.txt') as file:
         for line in file:
