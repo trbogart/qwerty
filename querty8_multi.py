@@ -44,9 +44,10 @@ class Qwerty:
     @staticmethod
     def _get_sub_masks(mask: int) -> Iterator[Tuple[int, int]]:
         if mask.bit_count() > 2:
+            # find all possible sub-masks without highest bit set (to avoid duplicates)
             for mask1 in range(1, 1 << (mask.bit_length()-1)):
                 if mask1 != mask and mask1 | mask == mask:
-                    mask2 = ~mask1 & mask
+                    mask2 = ~mask1 & mask # will have highest bit set
                     assert mask1 > 0
                     assert mask2 > 0
                     assert mask1 ^ mask2 == mask
