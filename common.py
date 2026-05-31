@@ -1,13 +1,15 @@
 from functools import reduce
 
-# QWERTY
-fingers = ['qaz', 'wsx', 'edc', 'rfvtgb', 'yhnujm', 'ik', 'ol', 'p']
+layout = 'qwerty'
 
-# Dvorak
-# fingers = ['a', 'oq', 'ej', 'pukyix', 'fdbghm', 'ctw', 'rnv', 'lsz']
+fingers = {
+    'qwerty': ['qaz', 'wsx', 'edc', 'rfvtgb', 'yhnujm', 'ik', 'ol', 'p'],
+    'dvorak': ['a', 'oq', 'ej', 'pukyix', 'fdbghm', 'ctw', 'rnv', 'lsz'],
+    'colemak': ['qaz', 'wrx', 'fsc', 'ptvgdb', 'jhklnm', 'ue', 'yi', 'o'],
+}
 
 finger_masks = {
-    key: 1 << finger for finger, keys in enumerate(fingers) for key in keys
+    key: 1 << finger for finger, keys in enumerate(fingers[layout]) for key in keys
 }
 
 
