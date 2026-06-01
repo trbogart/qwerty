@@ -14,13 +14,10 @@ finger_masks = {
 }
 
 
-def get_all_words() -> Iterable[str]:
-    # return all words from SOWPODS dictionary
+def get_all_words() -> Iterable[tuple[str, int]]:
+    # return all words from SOWPODS dictionary, along with finger bit mask
     with open('sowpods.txt') as file:
         for line in file:
-            yield line.strip().lower()
-
-
-def get_finger_mask(word: str) -> int:
-    # return finger bit mask for word
-    return reduce(lambda m, c: m | finger_masks[c], word, 0)
+            word = line.strip().lower()
+            mask = reduce(lambda m, c: m | finger_masks[c], word, 0)
+            yield word, mask

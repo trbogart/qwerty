@@ -2,11 +2,10 @@
 
 from collections import defaultdict
 
-from common import get_all_words, get_finger_mask
+from common import get_all_words
 
 words = defaultdict(list)  # mask -> list of words with that mask and no repeats
-for word in get_all_words():
-    mask = get_finger_mask(word)
+for word, mask in get_all_words():
     if mask.bit_count() == len(word):
         words[mask].append(word)
 
@@ -16,7 +15,7 @@ def get_words(mask: int) -> list[str]:
     return words[mask]
 
 
-# both counts are doubled
+# both counts are doubled, since print in both directions
 count = 0
 unique_words = 0
 for mask1 in range(1, 256):

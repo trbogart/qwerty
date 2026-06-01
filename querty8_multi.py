@@ -1,15 +1,15 @@
 # Counts groups of words that can be typed with every finger exactly once on a QWERTY keyboard
 # Ignores spaces, but groups of 3 words use all ten fingers exactly once
+import time
 from typing import Iterator, Tuple
 
-from common import get_all_words, get_finger_mask
+from common import get_all_words
 
 
 class Qwerty:
     def __init__(self):
         self.mask_counts = [0] * 256
-        for word in get_all_words():
-            mask = get_finger_mask(word)
+        for word, mask in get_all_words():
             if mask.bit_count() == len(word):
                 self.mask_counts[mask] += 1
 
@@ -45,9 +45,9 @@ class Qwerty:
     def _get_sub_masks(mask: int) -> Iterator[Tuple[int, int]]:
         if mask.bit_count() > 2:
             # find all possible sub-masks without highest bit set (to avoid duplicates)
-            for mask1 in range(1, 1 << (mask.bit_length()-1)):
+            for mask1 in range(mask & -mask, 1 << (mask.bit_length() - 1)):
                 if mask1 != mask and mask1 | mask == mask:
-                    mask2 = ~mask1 & mask # other mask (will have highest bit set)
+                    mask2 = ~mask1 & mask  # other mask (will have highest bit set)
                     assert mask1 > 0
                     assert mask2 > 0
                     assert mask1 ^ mask2 == mask

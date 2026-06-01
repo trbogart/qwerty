@@ -1,11 +1,6 @@
 # Prints all words that are typed with every finger exactly once on a QWERTY keyboard
 
-from common import get_all_words, get_finger_mask
+from common import get_all_words
 
-
-def is_match(s: str) -> bool:
-    return len(s) == 8 and get_finger_mask(s) == 0xFF
-
-
-results = [word for word in get_all_words() if is_match(word)]
+results = [word for word, mask in get_all_words() if len(word) == 8 and mask == 0xFF]
 print(f'{len(results)} words:\n{'\n'.join(results)}')
